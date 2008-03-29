@@ -1,4 +1,4 @@
-## Interface: 20300
+## Interface: 20400
 
 ## Title: GreedBeacon
 ## Notes: Track down those needy and greedy party members.
@@ -6,10 +6,7 @@
 ## Version: Alpha
 ## X-Category: Inventory
 
-## SavedVariables: GreedBeaconDB
-
-## Dependencies: FuBar
-## OptionalDeps: Ace2, TabletLib, DewdropLib, FuBarPlugin-2.0
+## OptionalDeps: tekErr
 
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
