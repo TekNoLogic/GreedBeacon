@@ -50,19 +50,15 @@ f:SetScript("OnEvent", function(self, event, msg)
 end)
 
 
-local orig1 = ChatFrame_MessageEventHandler
-function ChatFrame_MessageEventHandler(event, ...)
-	if event == "CHAT_MSG_LOOT" then
---~ 		if arg1:match(" has selected .+ for: ") or (arg1:match(" passed on: ") and not arg1:match("Everyone passed on: ")) then return end
+ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", function(msg)
+--~ 	if msg:match(" has selected .+ for: ") or (msg:match(" passed on: ") and not msg:match("Everyone passed on: ")) then return end
 
-		local player, link = arg1:match("(.*) won: (.+)")
-		if player then
-			local roll, i = FindUnprintedRoll(link, player, true, true)
-			arg1 = string.format("%s|Hgreedbeacon:%d|h[%s roll]|h|r %s won %s ", roll._type == "Need" and colorneed or colorgreed, 1, roll._type, player, link)
-		end
+	local player, link = msg:match("(.*) won: (.+)")
+	if player then
+		local roll, i = FindUnprintedRoll(link, player, true, true)
+		return false, string.format("%s|Hgreedbeacon:%d|h[%s roll]|h|r %s won %s ", roll._type == "Need" and colorneed or colorgreed, 1, roll._type, player, link)
 	end
-	return orig1(event, ...)
-end
+end)
 
 
 local orig2 = SetItemRef
