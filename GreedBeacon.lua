@@ -28,7 +28,7 @@ end
 local f = CreateFrame("Frame")
 f:RegisterEvent("CHAT_MSG_LOOT")
 f:SetScript("OnEvent", function(self, event, msg)
-	local rolltype, rollval, link, player = msg:match("(.+) Roll %- (%d+) for (.+) by (.+)")
+	local rolltype, rollval, link, player = msg:match("(.+) Roll . (%d+) for (.+) by (.+)")
 	if player then
 		local roll, i = FindRoll(link, player, true)
 		roll[player] = (rolltype == "Need" and colorneed or colorgreed)..rollval
