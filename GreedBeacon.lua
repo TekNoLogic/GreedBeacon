@@ -5,23 +5,13 @@ local coloredwords = {Greed = colorgreed.."Greed", Need = colorneed.."Need"}
 local rolls = {}
 
 
-local function FindRoll(link, player, hasselected, hasrolled)
+local function FindRoll(link, player, hasselected)
 	for i,roll in ipairs(rolls) do
-		if roll._link == link and not roll._winner and (not roll[player] or hasselected) then return roll, i end
+		if roll._link == link and not roll._winner and (not roll[player] or hasselected) then return roll end
 	end
 	local newroll = {_link = link}
 	table.insert(rolls, newroll)
-	return newroll, #rolls
-end
-
-
-local function FindUnprintedRoll(link, player)
-	for i,roll in ipairs(rolls) do
-		if roll._link == link and roll[player] and (roll._printed or 0) < 7 then
-			roll._printed = (roll._printed or 0) + 1
-			return roll, i
-		end
-	end
+	return newroll
 end
 
 
@@ -30,22 +20,32 @@ f:RegisterEvent("CHAT_MSG_LOOT")
 f:SetScript("OnEvent", function(self, event, msg)
 	local rolltype, rollval, link, player = msg:match("(.+) Roll . (%d+) for (.+) by (.+)")
 	if player then
-		local roll, i = FindRoll(link, player, true)
+		local roll = FindRoll(link, player, true)
 		roll[player] = (rolltype == "Need" and colorneed or colorgreed)..rollval
 		roll._type = rolltype
 		return
 	end
 
-	local player, selection, link = msg:match("(.*) has selected (.+) for: (.+)")
+	local player, selection, link = msg:match("(.*) has?v?e? selected (.+) for: (.+)")
 	if player then
+		player = player == "You" and UnitName("player") or player
 		FindRoll(link, player)[player] = coloredwords[selection]
 		return
 	end
 
 	local player, link = msg:match("(.*) won: (.+)")
 	if player then
-		local roll, i = FindRoll(link, player, true, true)
-		roll._winner = player
+		player = player == "You" and UnitName("player") or player
+		for i,roll in ipairs(rolls) do
+			if roll._link == link and roll[player] and not roll._printed then
+				roll._printed = true
+				roll._winner = player
+				ChatFrame6:AddMessage(string.format("%s|Hgreedbeacon:%d|h[%s roll]|h|r %s won %s ", roll._type == "Need" and colorneed or colorgreed, i, roll._type or "???", player, link))
+				return
+			end
+		end
+		ChatFrame6:AddMessage("GB NO MATCH: "..msg)
+		return
 	end
 end)
 
