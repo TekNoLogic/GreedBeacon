@@ -51,13 +51,10 @@ end)
 
 
 ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", function(msg)
---~ 	if msg:match(" has selected .+ for: ") or (msg:match(" passed on: ") and not msg:match("Everyone passed on: ")) then return end
-
-	local player, link = msg:match("(.*) won: (.+)")
-	if player then
-		local roll, i = FindUnprintedRoll(link, player, true, true)
-		return false, string.format("%s|Hgreedbeacon:%d|h[%s roll]|h|r %s won %s ", roll._type == "Need" and colorneed or colorgreed, 1, roll._type, player, link)
-	end
+	if msg:match("(.*) won: (.+)")
+		or msg:match(" has?v?e? selected .+ for: ")
+		or msg:match(" Roll . %d+ for .+ by ")
+		or (msg:match(" passed on: ") and not msg:match("Everyone passed on: ")) then return true end
 end)
 
 
