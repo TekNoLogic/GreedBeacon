@@ -74,20 +74,3 @@ function SetItemRef(link, text, button)
 		ItemRefTooltip:Show()
 	else return orig2(link, text, button) end
 end
-
-
---~ local oe = f:GetScript("OnEvent")
---~ local function e(event, a1)
---~ 	oe(f, event, a1)
---~ 	this, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9 = ChatFrame1, event, a1, nil, nil, ""
---~ 	ChatFrame_MessageEventHandler(event)
---~ end
-
---~ local name, link = GetItemInfo(6948)
---~ e("CHAT_MSG_LOOT", "Bob has selected Greed for: "..link)
---~ e("CHAT_MSG_LOOT", "Joe has selected Need for: "..link)
---~ e("CHAT_MSG_LOOT", "Mary has selected Need for: "..link)
---~ e("CHAT_MSG_LOOT", "Jane passed on: "..link)
---~ e("CHAT_MSG_LOOT", "Need Roll - 56 for "..link.." by Joe")
---~ e("CHAT_MSG_LOOT", "Need Roll - 5 for "..link.." by Mary")
---~ e("CHAT_MSG_LOOT", "Joe won: "..link)
