@@ -6,7 +6,7 @@
 ## Version: Alpha
 ## X-Category: Inventory
 
-## OptionalDeps: tekErr
+## OptionalDeps: tekErr, tekDebug
 
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
