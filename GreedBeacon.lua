@@ -1,4 +1,5 @@
 
+local L = setmetatable({}, {__index = function(t,i) return i end})
 
 local colorneed, colorgreed = "|cffff0000", "|cffffff00"
 local coloredwords = {Greed = colorgreed.."Greed", Need = colorneed.."Need"}
