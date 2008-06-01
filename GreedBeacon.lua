@@ -4,19 +4,32 @@ local colorneed, colorgreed = "|cffff0000", "|cffffff00"
 local coloredwords = {Greed = colorgreed.."Greed", Need = colorneed.."Need"}
 local rolls = {}
 
+local function Print(...) ChatFrame1:AddMessage("|cFF33FF99GreedBeacon|r: "..string.join(", ", ...)) end
+
 
 local chatframes = {[ChatFrame1] = false, [ChatFrame2] = false, [ChatFrame3] = false, [ChatFrame4] = false, [ChatFrame5] = false, [ChatFrame6] = false, [ChatFrame7] = false}
 for frame in pairs(chatframes) do
-	for i,v in pairs(frame.messageTypeList) do if v == "LOOT" then chatframes[frame] = true end end
+	for i,v in pairs(frame.messageTypeList) do
+		if v == "LOOT" then
+			chatframes[frame] = true
+			Print("Initializing - "..frame:GetName().. " has loot enabled")
+		end
+	end
 end
 
 local origadd, origrem = ChatFrame_AddMessageGroup, ChatFrame_RemoveMessageGroup
 ChatFrame_AddMessageGroup = function(frame, channel, ...)
-	if channel == "LOOT" then chatframes[frame] = true end
+	if channel == "LOOT" then
+		chatframes[frame] = true
+		Print("ChatFrame_AddMessageGroup", frame:GetName())
+	end
 	return origadd(frame, channel, ...)
 end
 ChatFrame_RemoveMessageGroup = function(frame, channel, ...)
-	if channel == "LOOT" then chatframes[frame] = false end
+	if channel == "LOOT" then
+		chatframes[frame] = false
+		Print("ChatFrame_RemoveMessageGroup", frame:GetName())
+	end
 	return origrem(frame, channel, ...)
 end
 
