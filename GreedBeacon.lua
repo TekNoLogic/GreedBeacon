@@ -1,9 +1,5 @@
-local YOU = "Ihr"; -- "You", the player
-local GREED = "Gier";
-local NEED = "Bedarf";
 
---~ local L = setmetatable(GetLocale() == "deDE" and {
-local L = setmetatable({
+local L = setmetatable(GetLocale() == "deDE" and {
 	["(.*) won: (.+)"] = "(.*) gewinnt: (.+)",
 	["%s|Hgreedbeacon:%d|h[%s roll]|h|r %s won %s "] = "%s|Hgreedbeacon:%d|h[%s roll]|h|r %s gewinnt: %s",
 	["(.*) has?v?e? selected (.+) for: (.+)"] = "(.+) hab?t f\195\188r (.+) '(.+)' ausgew\195\164hlt",
@@ -14,8 +10,7 @@ local L = setmetatable({
 	["Everyone passed on: "] = "Alle haben gepasst bei: ",
 	["Greed"] = GREED,
 	["Need"] = NEED,
-}, {__index = function(t,i) return i end})
---~ } or {}, {__index = function(t,i) return i end})
+} or {}, {__index = function(t,i) return i end})
 
 local colorneed, colorgreed = "|cffff0000", "|cffffff00"
 local coloredwords = {[L.Greed] = colorgreed..L.Greed, [L.Need] = colorneed..L.Need}
@@ -139,23 +134,6 @@ local function e(msg)
 	filter(msg)
 end
 
-local LOOT_ROLL_ALL_PASSED = "Alle haben gepasst bei: %s";
-local LOOT_ROLL_GREED =        "%s hat f\195\188r %s 'Gier' ausgew\195\164hlt";
-local LOOT_ROLL_GREED_SELF = "Ihr habt f\195\188r %s 'Gier' ausgew\195\164hlt";
-local LOOT_ROLL_NEED =         "%s hat f\195\188r %s 'Bedarf' ausgew\195\164hlt";
-local LOOT_ROLL_NEED_SELF =  "Ihr habt f\195\188r %s 'Bedarf' ausgew\195\164hlt";
-local LOOT_ROLL_PASSED =      "%s w\195\188rfelt nicht f\195\188r: %s";
-local LOOT_ROLL_PASSED_SELF =   "Ihr habt gepasst bei: %s";
-local LOOT_ROLL_PASSED_AUTO =        "%1$s passt automatisch bei %2$s, weil er den Gegenstand nicht benutzen kann.";
-local LOOT_ROLL_PASSED_AUTO_FEMALE = "%1$s passt automatisch bei %2$s, weil sie den Gegenstand nicht benutzen kann.";
-local LOOT_ROLL_PASSED_SELF_AUTO = "Ihr passt automatisch bei %s, weil Ihr den Gegenstand nicht benutzen k\195\182nnt.";
-local LOOT_ROLL_ROLLED_GREED =  "Wurf f\195\188r Gier: %d f\195\188r %s von %s"; -- First %s is item, second %s is player name
-local LOOT_ROLL_ROLLED_NEED = "Wurf f\195\188r Bedarf: %d f\195\188r %s von %s"; -- First %s is item, second %s is player name
-local LOOT_ROLL_WON = "%s gewinnt: %s";
-local LOOT_ROLL_WON_NO_SPAM_GREED = "%1$s gewinnt: %3$s |cff818181(Gier - %2$d)|r";
-local LOOT_ROLL_WON_NO_SPAM_NEED = "%1$s gewinnt: %3$s |cff818181(Bedarf - %2$d)|r";
-local LOOT_ROLL_YOU_WON = "Ihr gewinnt: %s";
-local YOU = "Ihr"; -- "You", the player
 
 local _, link = GetItemInfo(6948)
 e(string.format(LOOT_ROLL_NEED, "Joe", link))
