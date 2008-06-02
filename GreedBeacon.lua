@@ -4,11 +4,21 @@ local NEED = "Bedarf";
 
 --~ local L = setmetatable(GetLocale() == "deDE" and {
 local L = setmetatable({
+	["(.*) won: (.+)"] = "(.*) gewinnt: (.+)",
+	["%s|Hgreedbeacon:%d|h[%s roll]|h|r %s won %s "] = "%s|Hgreedbeacon:%d|h[%s roll]|h|r %s gewinnt: %s",
+	["(.*) has?v?e? selected (.+) for: (.+)"] = "(.+) hab?t f\195\188r (.+) '(.+)' ausgew\195\164hlt",
+	["(.+) Roll . (%d+) for (.+) by (.+)"] = "Wurf f\195\188r (.*): (%d+) f\195\188r (.*) von (.*)",
+	[" passed on: "] = " w\195\188rfelt nicht f\195\188r: ",
+	[" automatically passed on: "] = " passt automatisch bei ",
+	["You passed on: "] = "Ihr habt gepasst bei: ",
+	["Everyone passed on: "] = "Alle haben gepasst bei: ",
+	["Greed"] = GREED,
+	["Need"] = NEED,
 }, {__index = function(t,i) return i end})
 --~ } or {}, {__index = function(t,i) return i end})
 
 local colorneed, colorgreed = "|cffff0000", "|cffffff00"
-local coloredwords = {Greed = colorgreed.."Greed", Need = colorneed.."Need"}
+local coloredwords = {[L.Greed] = colorgreed..L.Greed, [L.Need] = colorneed..L.Need}
 local rolls = {}
 
 local function Print(...) ChatFrame1:AddMessage(string.join(" ", "|cFF33FF99GreedBeacon|r:", ...)) end
@@ -57,7 +67,7 @@ end
 local f = CreateFrame("Frame")
 f:RegisterEvent("CHAT_MSG_LOOT")
 f:SetScript("OnEvent", function(self, event, msg)
-	local rolltype, rollval, link, player = msg:match("(.+) Roll . (%d+) for (.+) by (.+)")
+	local rolltype, rollval, link, player = msg:match(L["(.+) Roll . (%d+) for (.+) by (.+)"])
 	if player then
 		local roll = FindRoll(link, player, true)
 		Debug("Roll detected", player, rolltype, rollval, link)
@@ -66,23 +76,23 @@ f:SetScript("OnEvent", function(self, event, msg)
 		return
 	end
 
-	local player, selection, link = msg:match("(.*) has?v?e? selected (.+) for: (.+)")
-	if player then
-		player = player == "You" and UnitName("player") or player
+	local player, selection, link = msg:match(L["(.*) has?v?e? selected (.+) for: (.+)"])
+	if player and player ~= "" then
+		player = player == YOU and UnitName("player") or player
 		Debug("Selection detected", player, selection, link)
 		FindRoll(link, player)[player] = coloredwords[selection]
 		return
 	end
 
-	local player, link = msg:match("(.*) won: (.+)")
+	local player, link = msg:match(L["(.*) won: (.+)"])
 	if player then
-		player = player == "You" and UnitName("player") or player
+		player = player == YOU and UnitName("player") or player
 		for i,roll in ipairs(rolls) do
 			if roll._link == link and roll[player] and not roll._printed then
 				roll._printed = true
 				roll._winner = player
 				Debug("Roll completed", roll._type or "nil", i, player, link)
-				local msg = string.format("%s|Hgreedbeacon:%d|h[%s roll]|h|r %s won %s ", roll._type == "Need" and colorneed or colorgreed, i, roll._type or "???", player, link)
+				local msg = string.format(L["%s|Hgreedbeacon:%d|h[%s roll]|h|r %s won %s "], roll._type == L.Need and colorneed or colorgreed, i, roll._type or "???", player, link)
 				for frame,val in pairs(chatframes) do if val then frame:AddMessage(msg) end end
 				return
 			end
@@ -94,7 +104,8 @@ end)
 
 
 local function filter(msg)
-	if msg:match("(.*) won: (.+)") or msg:match(" has?v?e? selected .+ for: ") or msg:match(" Roll . %d+ for .+ by ") or (msg:match(" passed on: ") and not msg:match("Everyone passed on: ")) then
+	if msg:match(L["(.*) won: (.+)"]) or msg:match(L["(.*) has?v?e? selected (.+) for: (.+)"]) or msg:match(L["(.+) Roll . (%d+) for (.+) by (.+)"])
+		or msg:match(L["You passed on: "]) or msg:match(L[" automatically passed on: "]) or (msg:match(L[" passed on: "]) and not msg:match(L["Everyone passed on: "])) then
 		Debug("Supressing chat message", msg)
 		return true
 	end
