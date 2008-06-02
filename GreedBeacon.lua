@@ -18,7 +18,8 @@ local rolls = {}
 
 local function Print(...) ChatFrame1:AddMessage(string.join(" ", "|cFF33FF99GreedBeacon|r:", ...)) end
 
-local function Debug(...) ChatFrame1:AddMessage(string.join(", ", ...)) end
+local debugf = tekDebug and tekDebug:GetFrame("GreedBeacon")
+local function Debug(...) if debugf then debugf:AddMessage(string.join(", ", ...)) end end
 
 
 local chatframes = {[ChatFrame1] = false, [ChatFrame2] = false, [ChatFrame3] = false, [ChatFrame4] = false, [ChatFrame5] = false, [ChatFrame6] = false, [ChatFrame7] = false}
@@ -124,39 +125,3 @@ function SetItemRef(link, text, button)
 		ItemRefTooltip:Show()
 	else return orig2(link, text, button) end
 end
-
-
--- Debugging event generator
-local oe = f:GetScript("OnEvent")
-local function e(msg)
-	Print(msg)
-	oe(f, "CHAT_MSG_LOOT", msg)
-	filter(msg)
-end
-
-
-local _, link = GetItemInfo(6948)
-e(string.format(LOOT_ROLL_NEED, "Joe", link))
-e(string.format(LOOT_ROLL_NEED_SELF, link))
-e(string.format(LOOT_ROLL_GREED, "Bob", link))
-e(string.format(LOOT_ROLL_PASSED, "Ike", link))
-e(string.format(LOOT_ROLL_ROLLED_NEED, 85, link, "Joe"))
-e(string.format(LOOT_ROLL_ROLLED_NEED, 8, link, UnitName("player")))
-e(string.format(LOOT_ROLL_WON, "Joe", link))
-
-local _, link = GetItemInfo(33809)
-e(string.format(LOOT_ROLL_GREED, "Joe", link))
-e(string.format(LOOT_ROLL_GREED_SELF, link))
-e(string.format(LOOT_ROLL_GREED, "Bob", link))
-e(string.format(LOOT_ROLL_PASSED, "Ike", link))
-e(string.format(LOOT_ROLL_ROLLED_GREED, 42, link, "Joe"))
-e(string.format(LOOT_ROLL_ROLLED_GREED, 99, link, UnitName("player")))
-e(string.format(LOOT_ROLL_ROLLED_GREED, 70, link, "Bob"))
-e(string.format(LOOT_ROLL_ROLLED_GREED, 91, link, "Ike"))
-e(string.format(LOOT_ROLL_WON, YOU, link))
-
-local _, link = GetItemInfo(11411)
-e(string.format(LOOT_ROLL_PASSED_AUTO, "Joe", link))
-e(string.format(LOOT_ROLL_PASSED_AUTO_FEMALE, "May", link))
-e(string.format(LOOT_ROLL_PASSED_SELF, link))
-e(string.format(LOOT_ROLL_ALL_PASSED, link))
