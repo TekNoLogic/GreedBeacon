@@ -18,8 +18,7 @@ local rolls = {}
 
 local function Print(...) ChatFrame1:AddMessage(string.join(" ", "|cFF33FF99GreedBeacon|r:", ...)) end
 
-local debugf = tekDebug and tekDebug:GetFrame("GreedBeacon")
-local function Debug(...) if debugf then debugf:AddMessage(string.join(", ", ...)) end end
+local function Debug(...) ChatFrame1:AddMessage("|cFF33FF99GreedBeacon debug|r:"..string.join(", ", ...)) end
 
 
 local chatframes = {[ChatFrame1] = false, [ChatFrame2] = false, [ChatFrame3] = false, [ChatFrame4] = false, [ChatFrame5] = false, [ChatFrame6] = false, [ChatFrame7] = false}
