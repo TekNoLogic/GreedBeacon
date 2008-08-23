@@ -1,0 +1,12 @@
+2.4.1.2-Beta
+    Make roll winner output obey the ChatFrames' filter settings
+
+2.4.1.1-Beta
+    Remove debugging test rolls
+    Make link output for "Win" message work correctly, finally.
+    Make chat filter actually filter, instead of print debuggery messages
+    Fix roll detection
+    Change to use ChatFrame_AddMessageEventFilter instead of hooking
+    Redo GreedBeacon again, this time lets try chat links instead of OptionHouse
+    Initial import, preparing to de-fu
+
