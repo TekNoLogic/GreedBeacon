@@ -4,11 +4,18 @@
 ## Notes: Track down those needy and greedy party members.
 ## Author: Tekkub Stoutwrithe
 ## Version: Alpha
+## X-Website: http://www.tekkub.net/
+## X-Email: tekkub-wow@googlegroups.com
 ## X-Category: Inventory
+
+## SavedVariables: GreedBeaconDB
 
 ## OptionalDeps: tekErr, tekDebug
 
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: delayed
 
+tekKonfig\tekKonfig.xml
+
 GreedBeacon.lua
+Config.lua
