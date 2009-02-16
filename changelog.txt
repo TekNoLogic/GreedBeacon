@@ -1,3 +1,7 @@
+3.0.9.5-Beta
+    Embed update
+    Add config instead of relying on Blizzy's somewhat buggy chat settings
+
 3.0.1.4-Beta
     ruRU translations from ichik @ wowi
 
