@@ -13,7 +13,7 @@
 ## OptionalDeps: tekErr, tekDebug
 
 ## LoadManagers: AddonLoader
-## X-LoadOn-Always: delayed
+## X-LoadOn-Group: true
 
 tekKonfig\tekKonfig.xml
 
