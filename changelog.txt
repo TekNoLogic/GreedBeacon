@@ -1,3 +1,6 @@
+3.1.0.7-Beta
+    AddonLoader load in group, not delayed
+
 3.1.0.6-Beta
     Fix chat filter for 3.1
 
