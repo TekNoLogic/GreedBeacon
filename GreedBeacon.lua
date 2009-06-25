@@ -101,7 +101,6 @@ end)
 
 
 ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", function(self, event, msg)
-	if select(4, GetBuildInfo()) < 30100 then msg = self end
 	if msg:match(L["(.*) won: (.+)"]) or msg:match(L["(.*) has?v?e? selected (.+) for: (.+)"]) or msg:match(L["(.+) Roll . (%d+) for (.+) by (.+)"])
 		or msg:match(L["You passed on: "]) or msg:match(L[" automatically passed on: "]) or (msg:match(L[" passed on: "]) and not msg:match(L["Everyone passed on: "])) then
 		Debug("Supressing chat message", msg)
