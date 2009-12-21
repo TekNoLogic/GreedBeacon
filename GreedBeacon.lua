@@ -23,8 +23,9 @@ local L = setmetatable(GetLocale() == "deDE" and {
 	["Need"] = NEED,
 } or {}, {__index = function(t,i) return i end})
 
-local colorneed, colorgreed = "|cffff0000", "|cffffff00"
-local coloredwords = {[L.Greed] = colorgreed..L.Greed, [L.Need] = colorneed..L.Need}
+local colorneed, colorgreed, colorde = "|cffff0000", "|cffffff00", "|cffff00ff"
+local rollcolors, coloredwords = {[L.Disenchant] = colorde, [L.Greed] = colorgreed, [L.Need] = colorneed}, {}
+for i,v in pairs(rollcolors) do coloredwords[i] = v..i end
 local rolls, db = {}
 
 local function Print(...) print("|cFF33FF99GreedBeacon|r:", ...) end
@@ -67,7 +68,7 @@ f:SetScript("OnEvent", function(self, event, addon)
 		if player then
 			local roll = FindRoll(link, player, true)
 			Debug("Roll detected", player, rolltype, rollval, link)
-			roll[player] = (rolltype == "Need" and colorneed or colorgreed)..rollval
+			roll[player] = rollcolors[rolltype]..rollval
 			roll._type = rolltype
 			return
 		end
@@ -85,10 +86,11 @@ f:SetScript("OnEvent", function(self, event, addon)
 			player = player == YOU and UnitName("player") or player
 			for i,roll in ipairs(rolls) do
 				if roll._link == link and roll[player] and not roll._printed then
+					local rolltype = roll._type == L.Need and L.Need or L.Greed
 					roll._printed = true
 					roll._winner = player
-					Debug("Roll completed", roll._type or "nil", i, player, link)
-					local msg = string.format(L["%s|Hgreedbeacon:%d|h[%s roll]|h|r %s won %s "], roll._type == L.Need and colorneed or colorgreed, i, roll._type or "???", player, link)
+					Debug("Roll completed", rolltype or "nil", i, player, link)
+					local msg = string.format(L["%s|Hgreedbeacon:%d|h[%s roll]|h|r %s won %s "], rollcolors[rolltype], i, rolltype, player, link)
 					_G[db.frame]:AddMessage(msg)
 					return
 				end
@@ -116,12 +118,12 @@ function SetItemRef(link, text, button)
 		ShowUIPanel(ItemRefTooltip)
 		if not ItemRefTooltip:IsShown() then ItemRefTooltip:SetOwner(UIParent, "ANCHOR_PRESERVE") end
 
-		local i = tonumber(id)
-		local val = rolls[i]
+		local roll = rolls[tonumber(id)]
+		local rolltype = roll._type == L.Need and coloredwords[L.Need] or coloredwords[L.Greed]
 		ItemRefTooltip:ClearLines()
-		ItemRefTooltip:AddLine(coloredwords[val._type].." roll|r - "..val._link)
-		ItemRefTooltip:AddDoubleLine("Winner:", "|cffffffff"..val._winner)
-		for i,v in pairs(val) do if string.sub(i, 1, 1) ~= "_" then ItemRefTooltip:AddDoubleLine(i, v) end end
+		ItemRefTooltip:AddLine(rolltype.." roll|r - "..roll._link)
+		ItemRefTooltip:AddDoubleLine("Winner:", "|cffffffff"..roll._winner)
+		for i,v in pairs(roll) do if string.sub(i, 1, 1) ~= "_" then ItemRefTooltip:AddDoubleLine(i, v) end end
 		ItemRefTooltip:Show()
 	else return orig2(link, text, button) end
 end
