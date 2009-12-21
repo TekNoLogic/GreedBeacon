@@ -1,3 +1,7 @@
+3.3.0.8-Beta
+    Fix up DE rolls
+    Remove 3.0 backcompat
+
 3.1.0.7-Beta
     AddonLoader load in group, not delayed
 
