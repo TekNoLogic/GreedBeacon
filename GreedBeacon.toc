@@ -18,5 +18,6 @@
 tekKonfig\tekKonfig.xml
 
 Locale.lua
+UtilityFunctions.lua
 GreedBeacon.lua
 Config.lua

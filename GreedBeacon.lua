@@ -7,17 +7,13 @@ local rollcolors, coloredwords = {[L.Disenchant] = colorde, [L.Greed] = colorgre
 for i,v in pairs(rollcolors) do coloredwords[i] = v..i end
 local rolls, db = {}
 
-local function Print(...) print("|cFF33FF99GreedBeacon|r:", ...) end
-
-local debugf = tekDebug and tekDebug:GetFrame("GreedBeacon")
-local function Debug(...) if debugf then debugf:AddMessage(string.join(", ", ...)) end end
 
 
 local function FindRoll(link, player, hasselected)
 	for i,roll in ipairs(rolls) do
 		if roll._link == link and not roll._winner and (not roll[player] or hasselected) then return roll end
 	end
-	Debug("New roll started", link)
+	ns.Debug("New roll started", link)
 	local newroll = {_link = link}
 	table.insert(rolls, newroll)
 	return newroll
@@ -37,7 +33,7 @@ f:SetScript("OnEvent", function(self, event, addon)
 			local name = "ChatFrame"..i
 			for i,v in pairs(_G[name].messageTypeList) do if v == "LOOT" then db.frame = name end end
 		end
-		Debug("Initializing DB to", db.frame)
+		ns.Debug("Initializing DB to", db.frame)
 	end
 
 	f:UnregisterEvent("ADDON_LOADED")
@@ -46,7 +42,7 @@ f:SetScript("OnEvent", function(self, event, addon)
 		local rolltype, rollval, link, player = msg:match(L["(.+) Roll . (%d+) for (.+) by (.+)"])
 		if player then
 			local roll = FindRoll(link, player, true)
-			Debug("Roll detected", player, rolltype, rollval, link)
+			ns.Debug("Roll detected", player, rolltype, rollval, link)
 			roll[player] = rollcolors[rolltype]..rollval
 			roll._type = rolltype
 			return
@@ -55,7 +51,7 @@ f:SetScript("OnEvent", function(self, event, addon)
 		local player, selection, link = msg:match(L["(.*) has?v?e? selected (.+) for: (.+)"])
 		if player and player ~= "" then
 			player = player == YOU and UnitName("player") or player
-			Debug("Selection detected", player, selection, link)
+			ns.Debug("Selection detected", player, selection, link)
 			FindRoll(link, player)[player] = coloredwords[selection]
 			return
 		end
@@ -68,13 +64,13 @@ f:SetScript("OnEvent", function(self, event, addon)
 					local rolltype = roll._type == L.Need and L.Need or L.Greed
 					roll._printed = true
 					roll._winner = player
-					Debug("Roll completed", rolltype or "nil", i, player, link)
+					ns.Debug("Roll completed", rolltype or "nil", i, player, link)
 					local msg = string.format(L["%s|Hgreedbeacon:%d|h[%s roll]|h|r %s won %s "], rollcolors[rolltype], i, rolltype, player, link)
 					_G[db.frame]:AddMessage(msg)
 					return
 				end
 			end
-			Print("ERROR: No match found for", msg)
+			ns.Print("ERROR: No match found for", msg)
 			return
 		end
 	end)
@@ -84,7 +80,7 @@ end)
 ChatFrame_AddMessageEventFilter("CHAT_MSG_LOOT", function(self, event, msg)
 	if msg:match(L["(.*) won: (.+)"]) or msg:match(L["(.*) has?v?e? selected (.+) for: (.+)"]) or msg:match(L["(.+) Roll . (%d+) for (.+) by (.+)"])
 		or msg:match(L["You passed on: "]) or msg:match(L[" automatically passed on: "]) or (msg:match(L[" passed on: "]) and not msg:match(L["Everyone passed on: "])) then
-		Debug("Supressing chat message", msg)
+		ns.Debug("Supressing chat message", msg)
 		return true
 	end
 end)
