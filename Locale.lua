@@ -23,4 +23,15 @@ ns.L = setmetatable(GetLocale() == "deDE" and {
 	["Everyone passed on: "] = ": \208\191\209\128\208\181\208\180\208\188\208\181\209\130 \208\189\208\184\208\186\208\190\208\188\209\131 \208\189\208\181 \208\189\209\131\208\182\208\181\208\189.",
 	["Greed"] = GREED,
 	["Need"] = NEED,
+} or GetLocale() == "esES" and {
+	["(.*) won: (.+)"] = "(.*) ha ganado: (.+)",
+	["%s|Hgreedbeacon:%d|h[%s roll]|h|r %s won %s "] = "%s|Hgreedbeacon:%d|h[%s roll]|h|r %s ha ganado: %s",
+	["(.*) has?v?e? selected (.+) for: (.+)"] = "(.*) ha seleccionado (.+) para: (.+)",
+	["(.+) Roll . (%d+) for (.+) by (.+)"] = "Tiro por (.+): (%d+) para (.+) por (.+)",
+	[" passed on: "] = " ha pasado de: ",
+	[" automatically passed on: "] = " ha pasado autom\195\161ticamente de: ",
+	["You passed on: "] = "Has pasado de: ",
+	["Everyone passed on: "] = "Todos han pasado de: ",
+	["Greed"] = GREED,
+	["Need"] = NEED,
 } or {}, {__index = function(t,i) return i end})
