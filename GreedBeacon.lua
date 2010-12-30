@@ -6,7 +6,7 @@ local colorneed, colorgreed, colorde = "|cffff0000", "|cffffff00", "|cffff00ff"
 local rollcolors, coloredwords = {[L.Disenchant] = colorde, [L.Greed] = colorgreed, [L.Need] = colorneed}, {}
 for i,v in pairs(rollcolors) do coloredwords[i] = v..i end
 local rolls, db = {}
-
+local iszhTW = GetLocale() == "zhTW"
 
 
 local function FindRoll(link, player, hasselected)
@@ -40,6 +40,7 @@ f:SetScript("OnEvent", function(self, event, addon)
 	f:RegisterEvent("CHAT_MSG_LOOT")
 	f:SetScript("OnEvent", function(self, event, msg)
 		local rolltype, rollval, link, player = msg:match(L["(.+) Roll . (%d+) for (.+) by (.+)"])
+			if iszhTW then link, player, rollval = rollval, link, player end
 		if player then
 			local roll = FindRoll(link, player, true)
 			ns.Debug("Roll detected", player, rolltype, rollval, link)
