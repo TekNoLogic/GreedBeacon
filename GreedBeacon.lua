@@ -40,6 +40,9 @@ f:SetScript("OnEvent", function(self, event, addon)
 	f:RegisterEvent("CHAT_MSG_LOOT")
 	f:SetScript("OnEvent", function(self, event, msg)
 		local rolltype, rollval, link, player = msg:match(L["(.+) Roll . (%d+) for (.+) by (.+)"])
+        if GetLocale() == "zhTW" then
+            link, player, rollval = rollval, link, player
+        end
 		if player then
 			local roll = FindRoll(link, player, true)
 			ns.Debug("Roll detected", player, rolltype, rollval, link)
