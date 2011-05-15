@@ -1,3 +1,7 @@
+4.1.0.9-Beta
+    add chinese locale and fix for zhTW
+    esES locale
+
 3.3.0.8-Beta
     Fix up DE rolls
     Remove 3.0 backcompat
