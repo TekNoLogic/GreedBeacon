@@ -7,6 +7,7 @@
 ## X-Website: http://www.tekkub.net/
 ## X-Email: tekkub-wow@googlegroups.com
 ## X-Category: Inventory
+## X-Icon: Interface\Icons\INV_Misc_EngGizmos_13
 
 ## SavedVariables: GreedBeaconDB
 
@@ -14,6 +15,7 @@
 
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Group: true
+## X-LoadOn-InterfaceOptions: GreedBeacon
 
 tekKonfig\tekKonfig.xml
 

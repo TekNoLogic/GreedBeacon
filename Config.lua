@@ -3,6 +3,8 @@
 --      Panel      --
 ---------------------
 
+if AddonLoader and AddonLoader.RemoveInterfaceOptions then AddonLoader:RemoveInterfaceOptions("GreedBeacon") end
+
 local frame = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
 frame.name = "GreedBeacon"
 frame:Hide()
