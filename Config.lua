@@ -34,8 +34,7 @@ frame:SetScript("OnShow", function(frame)
 	end)
 
 
-	local ident = LibStub("tekKonfig-Button").new_small(frame, "TOP", chatframedropdown, "TOP")
-	ident:SetPoint("RIGHT", -16, 0)
+	local ident = LibStub("tekKonfig-Button").new_small(frame, "TOPLEFT", chatframedropdown, "TOPRIGHT")
 	ident:SetText("Identify")
 	ident.tiptext = "Identify each chat frame"
 	ident:SetScript("OnClick", function(self) for i=1,7 do _G["ChatFrame"..i]:AddMessage("|cFF33FF99GreedBeacon|r: This is ChatFrame"..i) end end)
