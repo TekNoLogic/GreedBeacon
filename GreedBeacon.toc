@@ -1,4 +1,4 @@
-## Interface: 40100
+## Interface: 40200
 
 ## Title: GreedBeacon
 ## Notes: Track down those needy and greedy party members.
