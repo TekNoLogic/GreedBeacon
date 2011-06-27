@@ -1,9 +1,0 @@
-GreedBeacon is a simple roll-monitoring addon.  It does two things: block the "detailed loot roll" spam, and provide a chat link tooltip to pull up those blocked details.
-
-"Detailed Loot Information" must be turned on in the default config, otherwise GreedBeacon cannot get the roll details.
-
-h2. Links
-
-<b>Visit "my site":http://tekkub.net/ for more great addons<br>
-Please report all bugs and feature requests to my "Github tracker":http://github.com/tekkub/GreedBeacon/issues<br>
-Please direct all feedback and questions to my "Google Groups":http://groups-beta.google.com/group/tekkub-wow mailinglist.</b>
