@@ -1,3 +1,6 @@
+4.2.0.10-Beta
+    Adjust for new big config frame
+
 4.1.0.9-Beta
     add chinese locale and fix for zhTW
     esES locale
