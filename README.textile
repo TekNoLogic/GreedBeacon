@@ -1,3 +1,9 @@
+<b>This addon has been discontinued.</b>
+
+Blizzard's new loot history frame does everything I wanted this addon to do and more.
+
+---
+
 GreedBeacon is a simple roll-monitoring addon.  It does two things: block the "detailed loot roll" spam, and provide a chat link tooltip to pull up those blocked details.
 
 "Detailed Loot Information" must be turned on in the default config, otherwise GreedBeacon cannot get the roll details.
